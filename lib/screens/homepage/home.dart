@@ -3,6 +3,8 @@ import 'package:bigdaystudio/longin3.dart';
 import 'package:bigdaystudio/screens/UserProfile/UserProfile.dart';
 import 'package:bigdaystudio/screens/auth/Login.dart';
 import 'package:bigdaystudio/screens/homepage/Menu1.dart';
+import 'package:bigdaystudio/screens/homepage/dashboard.dart';
+import 'package:bigdaystudio/screens/homepage/homepage1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = [
-    MainPage(),
+    HomePage1(),
     SearchUserPage(),
     LoginPage123(),
     UserProfilePage(),
@@ -58,9 +60,10 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   'ໜ້າຫຼັກ',
                   style: TextStyle(
-                    color: _selectedIndex == 0 ? Colors.white : Colors.black54,
-                    fontSize: 12.0,
-                  ),
+                      color:
+                          _selectedIndex == 0 ? Colors.white : Colors.black54,
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -82,9 +85,28 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   'ຄົ້ນໜ້າ',
                   style: TextStyle(
-                    color: _selectedIndex == 1 ? Colors.white : Colors.black54,
-                    fontSize: 12.0,
-                  ),
+                      color:
+                          _selectedIndex == 1 ? Colors.white : Colors.black54,
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(bottom: 5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 48,
+                ),
+                Text(
+                  'ການຈອງ',
+                  style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -106,9 +128,9 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   'ການຈັດການ',
                   style: TextStyle(
-                    color: _selectedIndex == 2 ? Colors.white : Colors.black54,
-                    fontSize: 12.0,
-                  ),
+                      color:
+                          _selectedIndex == 2 ? Colors.white : Colors.black54,
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -128,9 +150,10 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   'ໂປຣຟາຍ',
                   style: TextStyle(
-                    color: _selectedIndex == 3 ? Colors.white : Colors.black54,
-                    fontSize: 12.0,
-                  ),
+                      color:
+                          _selectedIndex == 3 ? Colors.white : Colors.black54,
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -143,7 +166,8 @@ class _HomePageState extends State<HomePage> {
         body: _widgetOptions.elementAt(_selectedIndex),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, "/register");
+            Navigator.pushReplacementNamed(
+                context, '/register');
           },
           child: const Icon(Icons.add),
           backgroundColor: colortheme.primaryColor,

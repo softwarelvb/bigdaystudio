@@ -143,8 +143,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     children: [
                       ElevatedButton(
                           onPressed: () {
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, "/login", (route) => false);
+                            Navigator.pushReplacementNamed(context, '/login');
                           },
                           child: Text("Logout"))
                     ],
