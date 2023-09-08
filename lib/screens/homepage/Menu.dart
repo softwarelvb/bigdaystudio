@@ -74,7 +74,7 @@ class MenuPage extends StatelessWidget {
         // TODO: Add navigation logic
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(8),
@@ -83,7 +83,7 @@ class MenuPage extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
             SizedBox(width: 16),
             Text(
@@ -120,7 +120,7 @@ class MenuPage extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
             SizedBox(width: 16),
             Text(

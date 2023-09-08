@@ -77,7 +77,7 @@ class _MainPageState extends State<MainPage> {
               title: Text(photographers[index].name),
               subtitle: Text(
                   '${photographers[index].location} · ${photographers[index].speciality}'),
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // Navigate to photographer's profile page
               },

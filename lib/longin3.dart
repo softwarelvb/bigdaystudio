@@ -37,7 +37,7 @@ class _LoginPage3State extends State<LoginPage3> {
                         ),
                         child: Image.asset('assets/xl.png', height: 140),
                       ),
-                      Center(
+                      const Center(
                         child: Column(
                           children: [
                             Text(
@@ -82,29 +82,30 @@ class _LoginPage3State extends State<LoginPage3> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        SizedBox(height: 10),
+                        const  SizedBox(height: 10),
                         Container(
                           child: Column(
                             children: <Widget>[
-                              SizedBox(height: 20),
+                              const  SizedBox(height: 20),
                               _buildEmail(_emailController, _emailStateValid),
-                              SizedBox(height: 10),
+                              const   SizedBox(height: 10),
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
                                 child: TextField(
                                   obscureText: true,
                                   decoration: InputDecoration(
                                       hintText: "ລະຫັດຜ່ານ",
                                       fillColor: Colors.white,
                                       filled: true,
-                                      contentPadding: EdgeInsets.symmetric(vertical: 15),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(vertical: 15),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
                                         borderSide: BorderSide.none,
                                       ),
-                                      prefixIcon: Icon(Icons.lock,
+                                      prefixIcon: const Icon(Icons.lock,
                                           color: Colors.black54),
-                                      suffixIcon: Icon(
+                                      suffixIcon: const Icon(
                                         Icons.remove_red_eye,
                                         color: Colors.black54,
                                       )),
@@ -114,7 +115,7 @@ class _LoginPage3State extends State<LoginPage3> {
                           ),
                         ),
                         CheckboxListTile(
-                          title: Text(
+                          title: const Text(
                             "ຈື່ລະຫັດຜ່ານ",
                             style: TextStyle(
                               fontSize: 13,
@@ -126,14 +127,14 @@ class _LoginPage3State extends State<LoginPage3> {
                           tileColor: Colors.white,
                           onChanged: (value) {},
                           controlAffinity: ListTileControlAffinity.leading,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(color: Colors.white),
+                            side:  const BorderSide(color: Colors.white),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 20, right: 20),
+                          padding: const EdgeInsets.only(left: 20, right: 20),
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.pushReplacementNamed(
@@ -173,7 +174,7 @@ class _LoginPage3State extends State<LoginPage3> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Divider(
                             height: 1,
@@ -182,7 +183,7 @@ class _LoginPage3State extends State<LoginPage3> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Center(
+                        const  Center(
                           child: Column(
                             children: [
                               Text(
@@ -195,12 +196,10 @@ class _LoginPage3State extends State<LoginPage3> {
                               ),
                               Text(
                                 'ລົງທະບຽນບັນຊີ',
-
                                 style: TextStyle(
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15
-                                ),
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
                               ),
                             ],
                           ),
@@ -216,23 +215,25 @@ class _LoginPage3State extends State<LoginPage3> {
   }
 }
 
-Widget _buildEmail(_emailController, bool _emailStateValid) {
+Widget _buildEmail(emailController, bool emailStateValid) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 20,),
+    padding: const EdgeInsets.symmetric(
+      horizontal: 20,
+    ),
     child: TextField(
       decoration: InputDecoration(
         hintText: "ອີເມວ",
         fillColor: Colors.white,
         filled: true,
-        contentPadding: EdgeInsets.symmetric(vertical: 15),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
         ),
-        prefixIcon: Icon(Icons.email, color: Colors.black54),
+        prefixIcon: const Icon(Icons.email, color: Colors.black54),
       ),
       onChanged: (value) {
-        _emailStateValid = _emailController.validate(value);
+        emailStateValid = emailController.validate(value);
       },
     ),
   );

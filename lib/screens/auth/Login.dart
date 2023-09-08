@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import '../components/form/form.dart';
 
 class LoginPage123 extends StatelessWidget {
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  LoginPage123({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/background.jpg'),
             fit: BoxFit.cover,
@@ -21,16 +23,16 @@ class LoginPage123 extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.width * 0.8,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/xl.png'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: <Widget>[
                   PasswordFormField(
@@ -40,14 +42,14 @@ class LoginPage123 extends StatelessWidget {
                   TextFormField(
                     decoration: InputDecoration(
                       hintText: 'Email or Phone',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: Colors.grey,
                       ),
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.person,
                         color: Colors.grey,
                       ),
-                      contentPadding: EdgeInsets.symmetric(
+                      contentPadding: const EdgeInsets.symmetric(
                         vertical: 15,
                         horizontal: 10,
                       ),
@@ -56,22 +58,22 @@ class LoginPage123 extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     decoration: InputDecoration(
                       hintText: 'Password',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: Colors.grey,
                       ),
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.lock,
                         color: Colors.grey,
                       ),
-                      suffixIcon: Icon(
+                      suffixIcon: const Icon(
                         Icons.visibility,
                         color: Colors.grey,
                       ),
-                      contentPadding: EdgeInsets.symmetric(
+                      contentPadding: const EdgeInsets.symmetric(
                         vertical: 15,
                         horizontal: 10,
                       ),
@@ -81,9 +83,9 @@ class LoginPage123 extends StatelessWidget {
                     ),
                     obscureText: true,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
-                    child: Text(
+                    child: const Text(
                       'Log In',
                       style: TextStyle(
                         color: Colors.white,
@@ -91,9 +93,9 @@ class LoginPage123 extends StatelessWidget {
                     ),
                     onPressed: () {},
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
-                    child: Text(
+                    child: const Text(
                       'Forgot Password?',
                       style: TextStyle(
                         color: Colors.grey,
@@ -101,8 +103,8 @@ class LoginPage123 extends StatelessWidget {
                     ),
                     onPressed: () {},
                   ),
-                  SizedBox(height: 30),
-                  Row(
+                  const SizedBox(height: 30),
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Expanded(
@@ -125,14 +127,14 @@ class LoginPage123 extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
                         width: 50,
                         height: 50,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
                               'assets/images/facebook_icon.png',
@@ -141,11 +143,11 @@ class LoginPage123 extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       Container(
                         width: 50,
                         height: 50,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(
                               'assets/images/google_icon.png',

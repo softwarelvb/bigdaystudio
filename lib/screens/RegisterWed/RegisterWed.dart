@@ -59,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Phone Number'),
+                  decoration: const InputDecoration(labelText: 'Phone Number'),
                   validator: (value) {
                     // if (value.isEmpty) {
                     //   return 'Please enter your phone number';
@@ -73,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'Photographer'),
+                  decoration: const InputDecoration(labelText: 'Photographer'),
                   value: _photographer,
                   items: ['Photographer 1', 'Photographer 2', 'Photographer 3']
                       .map((label) => DropdownMenuItem(

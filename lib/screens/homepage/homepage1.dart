@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../components/Dashboard.dart';
 import 'dashboard.dart';
 
 class HomePage1 extends StatelessWidget {
@@ -36,13 +37,15 @@ class HomePage1 extends StatelessWidget {
     },
   ];
 
+  HomePage1({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amberAccent,
         elevation: 0,
-        title: Text(
+        title: const Text(
           'ໜ້າຫຼັກ',
           style: TextStyle(
             color: Colors.black,
@@ -51,7 +54,7 @@ class HomePage1 extends StatelessWidget {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.notifications_active,
               color: Colors.black,
             ),
@@ -65,96 +68,101 @@ class HomePage1 extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
+            const Row(
               children: [
+                Icon(Icons.dashboard, size: 20, color: Colors.black54),
                 Text(
-                  "ລາຍການທັງໝົດ",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w600),
+                  " ລາຍການປະຈຳເດືອນ",
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),
             GridView.count(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              crossAxisCount: 4,
-              children: _menuItems.map((item) {
-                return InkWell(
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              childAspectRatio: 1.7,
+              padding: const EdgeInsets.all(3),
+              children: [
+                InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(item['route']);
+                    Navigator.of(context).pushNamed("/profile");
                   },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(item['icon']),
-                      SizedBox(height: 5),
-                      Text(item['label']),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: DashboardCard(
+                      title: 'ລາຍການທັງໝົດ',
+                      textColors: Colors.white,
+                      subtitle: '35',
+                      icon: Icons.list,
+                      iconColors: Colors.white,
+                      startColor: Colors.amber[400]!,
+                      endColor: Colors.amber,
+                    ),
                   ),
-                );
-              }).toList(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: DashboardCard(
+                    title: 'ລາຍການຖ່າຍແລ້ວ',
+                    textColors: Colors.white,
+                    subtitle: '22',
+                    icon: Icons.done_all_sharp,
+                    iconColors: Colors.white,
+                    startColor: Colors.green,
+                    endColor: Colors.greenAccent,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: DashboardCard(
+                    title: 'ລາຍການລໍຖ້າຖ່າຍ',
+                    textColors: Colors.blueAccent,
+                    subtitle: '13',
+                    icon: Icons.manage_history_outlined,
+                    iconColors: Colors.blueAccent,
+                    startColor: Colors.white,
+                    endColor: Colors.white,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: DashboardCard(
+                    title: 'ລາຍການຍົກເລີກ',
+                    textColors: Colors.deepOrangeAccent,
+                    subtitle: '0',
+                    icon: Icons.cancel,
+                    iconColors: Colors.deepOrangeAccent,
+                    startColor: Colors.white,
+                    endColor: Colors.white,
+                  ),
+                ),
+              ],
             ),
-            // Container(
-            //   padding: EdgeInsets.all(20),
-            //   decoration: BoxDecoration(
-            //     color: Colors.blue,
-            //     borderRadius: BorderRadius.only(
-            //       bottomLeft: Radius.circular(40),
-            //       bottomRight: Radius.circular(40),
-            //     ),
-            //     boxShadow: [
-            //       BoxShadow(
-            //         color: Colors.black26,
-            //         blurRadius: 10,
-            //         offset: Offset(0, 5),
-            //       )
-            //     ],
-            //   ),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: <Widget>[
-            //       Text(
-            //         'Balance',
-            //         style: TextStyle(
-            //           color: Colors.white,
-            //           fontSize: 20,
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //       SizedBox(height: 10),
-            //       Text(
-            //         '\$3,500.00',
-            //         style: TextStyle(
-            //           color: Colors.white,
-            //           fontSize: 40,
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //       SizedBox(height: 10),
-            //       Text(
-            //         'Available Balance: \$2,500.00',
-            //         style: TextStyle(
-            //           color: Colors.white,
-            //           fontSize: 16,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            const SizedBox(
+              height: 5,
+            ),
             Card(
                 elevation: 5,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.horizontal(
                         right: Radius.circular(10), left: Radius.circular(10))),
                 child: Column(
                   children: [
-                    Padding(
+                    const Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: Row(
                           children: [
-                            Icon(Icons.app_registration),
+                            Icon(
+                              Icons.app_registration,
+                              size: 18,
+                            ),
                             Text(
-                              'ລາຍການຈອງລ່າສຸດ',
+                              ' ລາຍການລ່າສຸດ',
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.black54,
@@ -164,14 +172,14 @@ class HomePage1 extends StatelessWidget {
                         )),
                     ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: _transactions.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
-                          leading: Icon(Icons.shopping_cart),
+                          leading: const Icon(Icons.shopping_cart),
                           title: Text(_transactions[index]),
-                          subtitle: Text('-\$50.00'),
-                          trailing: Text(
+                          subtitle: const Text('-\$50.00'),
+                          trailing: const Text(
                             'Mar 15',
                             style: TextStyle(
                               color: Colors.grey,

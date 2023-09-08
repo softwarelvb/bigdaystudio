@@ -1,11 +1,6 @@
-import 'package:bigdaystudio/login4.dart';
-import 'package:bigdaystudio/longin3.dart';
 import 'package:bigdaystudio/screens/UserProfile/UserProfile.dart';
 import 'package:bigdaystudio/screens/auth/Login.dart';
-import 'package:bigdaystudio/screens/homepage/Menu1.dart';
-import 'package:bigdaystudio/screens/homepage/dashboard.dart';
 import 'package:bigdaystudio/screens/homepage/homepage1.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
@@ -25,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _widgetOptions = [
     HomePage1(),
-    SearchUserPage(),
+    const SearchUserPage(),
     LoginPage123(),
     UserProfilePage(),
   ];
@@ -39,19 +34,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     BottomAppBar bottomAppBar = BottomAppBar(
+      clipBehavior: Clip.none,
       color: colortheme.primaryColor,
-      shape: CircularNotchedRectangle(),
+      shape: const CircularNotchedRectangle(),
+      surfaceTintColor: Colors.transparent,
       notchMargin: 5.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-            padding: EdgeInsets.only(bottom: 5),
+            padding: const EdgeInsets.only(bottom: 5),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.home, size: 30),
+                  icon: const Icon(Icons.home, size: 30),
                   color: _selectedIndex == 0 ? Colors.white : Colors.black54,
                   onPressed: () {
                     onSelectMenu(0);
@@ -69,7 +66,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 4, right: 30),
+            padding: const EdgeInsets.only(bottom: 4, right: 30),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -94,8 +91,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 5),
-            child: Column(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: const Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
@@ -112,7 +109,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 4, left: 30),
+            padding: const EdgeInsets.only(bottom: 4, left: 30),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -136,12 +133,12 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 4),
+            padding: const EdgeInsets.only(bottom: 4),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.person),
+                  icon: const Icon(Icons.person),
                   onPressed: () {
                     onSelectMenu(3);
                   },
@@ -162,6 +159,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
+
     return Scaffold(
         body: _widgetOptions.elementAt(_selectedIndex),
         floatingActionButton: FloatingActionButton(
@@ -169,9 +167,9 @@ class _HomePageState extends State<HomePage> {
             Navigator.pushReplacementNamed(
                 context, '/register');
           },
-          child: const Icon(Icons.add),
           backgroundColor: colortheme.primaryColor,
           foregroundColor: Colors.limeAccent,
+          child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: bottomAppBar);

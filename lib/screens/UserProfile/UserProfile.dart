@@ -6,11 +6,11 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  String _name = 'John Doe';
-  String _email = 'johndoe@mail.com';
-  String _phone = '123-456-7890';
-  String _address = '123 Main St, Anytown, USA';
-  String _imagePath = 'assets/user_image.png';
+  final String _name = 'John Doe';
+  final String _email = 'johndoe@mail.com';
+  final String _phone = '123-456-7890';
+  final String _address = '123 Main St, Anytown, USA';
+  final String _imagePath = 'assets/user_image.png';
 
   void _editProfile() {
     // TODO: Implement edit profile functionality
@@ -20,13 +20,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
         centerTitle: true,
         backgroundColor: Colors.amberAccent,
         elevation: 0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: _editProfile,
           ),
         ],
@@ -44,10 +44,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       radius: 50,
                       backgroundImage: AssetImage(_imagePath),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     Text(
                       _name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -56,8 +56,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   ])),
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
@@ -67,77 +67,77 @@ class _UserProfilePageState extends State<UserProfilePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: 16.0),
-                  Text(
+                  const SizedBox(height: 16.0),
+                  const Text(
                     'Personal Information',
-                    style: TextStyle(
+                    style:  TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
-                  Divider(color: Colors.grey),
-                  SizedBox(height: 8.0),
-                  Text(
+                  const SizedBox(height: 8.0),
+                  const Divider(color: Colors.grey),
+                  const SizedBox(height: 8.0),
+                  const Text(
                     'Name',
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
                     _name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16.0,
                     ),
                   ),
-                  SizedBox(height: 16.0),
-                  Text(
+                  const SizedBox(height: 16.0),
+                  const Text(
                     'Email',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
                     _email,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16.0,
                     ),
                   ),
-                  SizedBox(height: 16.0),
-                  Text(
+                  const SizedBox(height: 16.0),
+                  const Text(
                     'Phone Number',
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
                     _phone,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16.0,
                     ),
                   ),
-                  SizedBox(height: 16.0),
-                  Text(
+                  const SizedBox(height: 16.0),
+                  const Text(
                     'Address',
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
                     _address,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16.0,
                     ),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -145,7 +145,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           onPressed: () {
                             Navigator.pushReplacementNamed(context, '/login');
                           },
-                          child: Text("Logout"))
+                          child: const Text("Logout"))
                     ],
                   )
                 ],
