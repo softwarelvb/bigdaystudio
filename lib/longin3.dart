@@ -82,15 +82,16 @@ class _LoginPage3State extends State<LoginPage3> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        const  SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Container(
                           child: Column(
                             children: <Widget>[
-                              const  SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               _buildEmail(_emailController, _emailStateValid),
-                              const   SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
                                 child: TextField(
                                   obscureText: true,
                                   decoration: InputDecoration(
@@ -98,7 +99,8 @@ class _LoginPage3State extends State<LoginPage3> {
                                       fillColor: Colors.white,
                                       filled: true,
                                       contentPadding:
-                                          const EdgeInsets.symmetric(vertical: 15),
+                                          const EdgeInsets.symmetric(
+                                              vertical: 15),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
                                         borderSide: BorderSide.none,
@@ -127,10 +129,11 @@ class _LoginPage3State extends State<LoginPage3> {
                           tileColor: Colors.white,
                           onChanged: (value) {},
                           controlAffinity: ListTileControlAffinity.leading,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 20),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
-                            side:  const BorderSide(color: Colors.white),
+                            side: const BorderSide(color: Colors.white),
                           ),
                         ),
                         Padding(
@@ -183,10 +186,10 @@ class _LoginPage3State extends State<LoginPage3> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const  Center(
+                        Center(
                           child: Column(
                             children: [
-                              Text(
+                              const Text(
                                 'ຍັງບໍ່ມີບັນຊີ ?',
                                 style: TextStyle(
                                   color: Colors.black54,
@@ -194,12 +197,18 @@ class _LoginPage3State extends State<LoginPage3> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Text(
-                                'ລົງທະບຽນບັນຊີ',
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, '/register-user');
+                                },
+                                child: const Text(
+                                  'ລົງທະບຽນບັນຊີ',
+                                  style: TextStyle(
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                ),
                               ),
                             ],
                           ),

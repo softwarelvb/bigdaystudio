@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1010116802045",
+    "project_id": "bds-studio",
+    "storage_bucket": "bds-studio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010116802045:android:e8784d57c1b98d26ea1594",
+        "android_client_info": {
+          "package_name": "com.example.bigdaystudio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1010116802045-akl6ncud1u3mjmog3pl8b6a70doescah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCntzg2TaonwIgK6tkuwxWnhTvSw9VXcTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1010116802045-akl6ncud1u3mjmog3pl8b6a70doescah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
