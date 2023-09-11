@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -13,6 +14,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
   final String _phone = '123-456-7890';
   final String _address = '123 Main St, Anytown, USA';
   final String _imagePath = 'assets/user_image.png';
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   void _editProfile() {
     // TODO: Implement edit profile functionality
@@ -72,7 +75,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   const SizedBox(height: 16.0),
                   const Text(
                     'Personal Information',
-                    style:  TextStyle(
+                    style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -144,8 +147,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/login');
+                          onPressed: () async {
+                            await _auth.signOut();
+                            if(context.mounted){
+                              Navigator.pushReplacementNamed(context, '/login');
+                            }
                           },
                           child: const Text("Logout"))
                     ],
