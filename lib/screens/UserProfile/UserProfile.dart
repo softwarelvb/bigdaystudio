@@ -1,3 +1,4 @@
+import 'package:bigdaystudio/loading/Loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../bloc/Login/AuthBloc.dart';
 import '../../bloc/Login/AuthEvent.dart';
 import '../../bloc/Login/AuthState.dart';
+import '../../models/UserModel.dart';
 import '../../services/UserService.dart';
+import '../../storage/UserStorage.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -26,58 +29,75 @@ class _UserProfilePageState extends State<UserProfilePage> {
     // TODO: Implement edit profile functionality
   }
 
+  UserModel? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
+
+  Future<void> getUserData() async {
+    UserModel? userData = await UserStorage.getUser();
+    setState(() {
+      _user = userData;
+    });
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       title: Text('Profile'),
+  //     ),
+  //     body: Center(
+  //       child: _user != null
+  //           ? Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           Text('Name: ${_user!.name}'),
+  //           Text('Email: ${_user!.email}'),
+  //           // Add more user information widgets as needed
+  //         ],
+  //       )
+  //           : CircularProgressIndicator(),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Profile'),
-          centerTitle: true,
-          backgroundColor: Colors.amberAccent,
-          elevation: 0,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: _editProfile,
+    return BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(AuthService()),
+        child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Profile'),
+              centerTitle: true,
+              backgroundColor: Colors.amberAccent,
+              elevation: 0,
+              actions: <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: _editProfile,
+                ),
+              ],
             ),
-          ],
-        ),
-        body: BlocProvider(
-          create: (context) => AuthBloc(AuthService()),
-          child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
-            if (state is AuthUnauthenticated) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/login', (route) => false);
-            } else if (state is AuthError) {
-              Fluttertoast.showToast(
-                msg: state.errorMessage,
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-              );
-            }
-          }, builder: (context, state) {
-            if (state is AuthAuthenticated) {
-              final data = state.user;
-              return Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('User ID: ${data.uid}'),
-                  Text('User Name: ${data.name}'),
-                  Text('User Email: ${data.email}'),
-                  Text('User Role: ${data.role}'),
-                  Text('User Phone: ${data.phone}'),
-                ],
-              ));
-            } else {
-              return ListView(
-                children: [
-                  Container(
-                      width: double.infinity,
-                      height: 200,
-                      color: Colors.amberAccent,
-                      child: Column(
+            body: BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthUnauthenticated) {
+                  // Handle logout success, navigate to login page or perform any other action
+                }
+              },
+              builder: (context, state) {
+                if (state is AuthAuthenticated) {
+                  UserModel user = state.user;
+                  return ListView(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 200,
+                        color: Colors.amberAccent,
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             CircleAvatar(
@@ -86,116 +106,132 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             ),
                             const SizedBox(height: 16.0),
                             Text(
-                              _name,
+                              user.name,
                               style: const TextStyle(
                                 fontSize: 24.0,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
                             ),
-                          ])),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0),
+                          ],
                         ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const SizedBox(height: 16.0),
-                          const Text(
-                            'Personal Information',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
                             ),
                           ),
-                          const SizedBox(height: 8.0),
-                          const Divider(color: Colors.grey),
-                          const SizedBox(height: 8.0),
-                          const Text(
-                            'Name',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            _name,
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          const Text(
-                            'Email',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            _email,
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          const Text(
-                            'Phone Number',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            _phone,
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          const Text(
-                            'Address',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            _address,
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                            ),
-                          ),
-                          const SizedBox(height: 16.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    context.read<AuthBloc>().add(LogoutEvent());
-                                  },
-                                  child: const Text("Logout"))
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              const SizedBox(height: 16.0),
+                              const Text(
+                                'ຂໍ້ມູນຜູ້ໃຊ້',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              const Divider(color: Colors.grey),
+                              const SizedBox(height: 8.0),
+                              const Text(
+                                'ຊື່ ແລະ ນາມສະກຸນ',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                user.name,
+                                style: const TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              const SizedBox(height: 16.0),
+                              const Text(
+                                'ອີເມວ',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                user.email,
+                                style: const TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              const SizedBox(height: 16.0),
+                              const Text(
+                                'ເບີໂທລະສັບ',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                user.phone,
+                                style: const TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              const SizedBox(height: 16.0),
+                              const Text(
+                                'ສິດທິໃນລະບົບ',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                user.role == 'A'
+                                    ? 'ຜູ້ດູແລລະບົບ'
+                                    : 'ຜູ້ໃຊ້ທົ່ວໄປ',
+                                style: const TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              const SizedBox(height: 16.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      context
+                                          .read<AuthBloc>()
+                                          .add(LogoutEvent());
+                                    },
+                                    child: const Text("Logout"),
+                                  ),
+                                ],
+                              ),
                             ],
-                          )
-                        ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              );
-            }
-          }),
-        ));
+                    ],
+                  );
+                }
+                if (state is AuthInitial) {
+                  return const Center(
+                    child: Text("ບໍ່ພົບຂໍ້ມູນ1"),
+                  );
+                } else {
+                  return const Center(
+                    child: Text("ບໍ່ພົບຂໍ້ມູນ"),
+                  );
+                }
+              },
+            )));
   }
 }

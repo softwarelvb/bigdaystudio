@@ -1,4 +1,5 @@
 import 'package:bigdaystudio/bloc/Login/AuthBloc.dart';
+import 'package:bigdaystudio/screens/UserProfile/UserProfile.dart';
 import 'package:bigdaystudio/screens/auth/longin3.dart';
 import 'package:bigdaystudio/screens/RegisterWed/RegisterWed.dart';
 import 'package:bigdaystudio/screens/Reservation/Wedding.dart';
@@ -26,27 +27,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [BlocProvider(create: (context) => AuthBloc(AuthService()))],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: colortheme,
-          home: const LoginFirebase(),
-          initialRoute: "/login",
-          routes: {
-            "/homepage": (context) => BlocProvider.value(
-              value: BlocProvider.of<AuthBloc>(context),
-              child: HomePage(),
-            ),
-            "/register": (context) => const PhotographerReservationForm(),
-            "/login": (context) => const LoginFirebase(),
-            "/register-user": (context) => const RegisterUser(),
-            "/reset-password": (context) => const ResetPassword()
-          },
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-        ));
+      providers: [
+        BlocProvider<AuthBloc>(
+            create: (BuildContext context) => AuthBloc(AuthService()))
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: colortheme,
+        home: BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(AuthService()),
+            child: const LoginFirebase()),
+        initialRoute: "/login",
+        routes: {
+          "/homepage": (context) => BlocProvider.value(
+                value: BlocProvider.of<AuthBloc>(context),
+                child: HomePage(),
+              ),
+          "/register": (context) => const PhotographerReservationForm(),
+          "/login": (context) => const LoginFirebase(),
+          "/register-user": (context) => const RegisterUser(),
+          "/reset-password": (context) => const ResetPassword(),
+          "/profile": (context) => const UserProfilePage()
+        },
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+      ),
+    );
   }
 }
-
