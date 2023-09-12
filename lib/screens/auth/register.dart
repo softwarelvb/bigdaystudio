@@ -1,9 +1,8 @@
 import 'package:bigdaystudio/loading/Loading.dart';
 import 'package:bigdaystudio/models/profile.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bigdaystudio/services/UserService.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterUser extends StatefulWidget {
   const RegisterUser({Key? key}) : super(key: key);
@@ -13,8 +12,10 @@ class RegisterUser extends StatefulWidget {
 }
 
 class _RegisterUserState extends State<RegisterUser> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -28,7 +29,6 @@ class _RegisterUserState extends State<RegisterUser> {
   bool _isLoading = false;
 
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -78,131 +78,23 @@ class _RegisterUserState extends State<RegisterUser> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                ),
-                                child: TextFormField(
-                                  controller: _emailController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'ກະລຸນາປ້ອນອີເມວ';
-                                    }
-                                    if (!RegExp(
-                                            r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                        .hasMatch(value)) {
-                                      return 'ກະລຸນາປ້ອນອີເມວໃຫ້ຖືກຕ້ອງ';
-                                    }
-                                    return null;
-                                  },
-                                  keyboardType: TextInputType.emailAddress,
-                                  decoration: InputDecoration(
-                                    hintText: "ອີເມວ",
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 15),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    prefixIcon: const Icon(Icons.email,
-                                        color: Colors.black54),
-                                  ),
-                                ),
-                              ),
+                              _buildName(),
                               const SizedBox(
                                 height: 20,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                ),
-                                child: TextFormField(
-                                  controller: _passwordController,
-                                  validator: (value) {
-                                    if (value!.isEmpty || value.length < 6) {
-                                      return 'ກະລຸນາປ້ອນ ລະຫັດຜ່ານ ແລະ ຫຼາຍກ່ວາ 6 ຕົວອັກສອນ';
-                                    }
-                                    return null;
-                                  },
-                                  obscureText: _obscureTextPassword,
-                                  decoration: InputDecoration(
-                                    hintText: "ລະຫັດຜ່ານ",
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 15),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    prefixIcon: const Icon(Icons.lock,
-                                        color: Colors.black54),
-                                    suffixIcon: IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            _obscureTextPassword =
-                                                !_obscureTextPassword;
-                                          });
-                                        },
-                                        icon: Icon(
-                                          _obscureTextPassword
-                                              ? Icons.remove_red_eye
-                                              : Icons.visibility_off,
-                                          color: Colors.black54,
-                                        )),
-                                  ),
-                                ),
-                              ),
+                              _buildPhone(),
                               const SizedBox(
                                 height: 20,
                               ),
-                              Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                  ),
-                                  child: TextFormField(
-                                    controller: _confirmPasswordController,
-                                    validator: (value) {
-                                      if (value!.isEmpty || value.length < 6) {
-                                        return 'ກະລຸນາປ້ອນ ລະຫັດຜ່ານ ແລະ ຫຼາຍກ່ວາ 6 ຕົວອັກສອນ';
-                                      }
-                                      if ((_passwordController.text !=
-                                          _confirmPasswordController.text)) {
-                                        return 'ລະຫັດຜ່ານບໍ່ກົງກັນ';
-                                      }
-                                      return null;
-                                    },
-                                    obscureText: _obscureTextConfirmPassword,
-                                    decoration: InputDecoration(
-                                      hintText: "ຢືນຢັນລະຫັດຜ່ານ",
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 15),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      prefixIcon: const Icon(Icons.lock,
-                                          color: Colors.black54),
-                                      suffixIcon: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _obscureTextConfirmPassword =
-                                                  !_obscureTextConfirmPassword;
-                                            });
-                                          },
-                                          icon: Icon(
-                                            _obscureTextConfirmPassword
-                                                ? Icons.visibility
-                                                : Icons.visibility_off,
-                                            color: Colors.black54,
-                                          )),
-                                    ),
-                                  )),
+                              _buildEmail(),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              _buildPassword(),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              _buildConfirmPassword(),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -288,58 +180,205 @@ class _RegisterUserState extends State<RegisterUser> {
         });
   }
 
+  Widget _buildName() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
+      child: TextFormField(
+        controller: _nameController,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'ກະລຸນາປ້ອນຊື່ ແລະ ນາມສະກຸນ';
+          }
+          return null;
+        },
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: "ຊື່ ແລະ ນາມສະກຸນ",
+          fillColor: Colors.white,
+          filled: true,
+          contentPadding: const EdgeInsets.symmetric(vertical: 15),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          prefixIcon: const Icon(Icons.person, color: Colors.black54),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPhone() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
+      child: TextFormField(
+        controller: _phoneController,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'ກະລຸນາປ້ອນເບີໂທລະສັບ';
+          }
+          return null;
+        },
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(
+          hintText: "ເບີໂທລະສັບ",
+          fillColor: Colors.white,
+          filled: true,
+          contentPadding: const EdgeInsets.symmetric(vertical: 15),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          prefixIcon: const Icon(Icons.phone_android, color: Colors.black54),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmail() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
+      child: TextFormField(
+        controller: _emailController,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'ກະລຸນາປ້ອນອີເມວ';
+          }
+          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+            return 'ກະລຸນາປ້ອນອີເມວໃຫ້ຖືກຕ້ອງ';
+          }
+          return null;
+        },
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          hintText: "ອີເມວ",
+          fillColor: Colors.white,
+          filled: true,
+          contentPadding: const EdgeInsets.symmetric(vertical: 15),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          prefixIcon: const Icon(Icons.email, color: Colors.black54),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPassword() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
+      child: TextFormField(
+        controller: _passwordController,
+        validator: (value) {
+          if (value!.isEmpty || value.length < 6) {
+            return 'ກະລຸນາປ້ອນ ລະຫັດຜ່ານ ແລະ ຫຼາຍກ່ວາ 6 ຕົວອັກສອນ';
+          }
+          return null;
+        },
+        obscureText: _obscureTextPassword,
+        decoration: InputDecoration(
+          hintText: "ລະຫັດຜ່ານ",
+          fillColor: Colors.white,
+          filled: true,
+          contentPadding: const EdgeInsets.symmetric(vertical: 15),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          prefixIcon: const Icon(Icons.lock, color: Colors.black54),
+          suffixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  _obscureTextPassword = !_obscureTextPassword;
+                });
+              },
+              icon: Icon(
+                _obscureTextPassword
+                    ? Icons.remove_red_eye
+                    : Icons.visibility_off,
+                color: Colors.black54,
+              )),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildConfirmPassword() {
+    return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
+        child: TextFormField(
+          controller: _confirmPasswordController,
+          validator: (value) {
+            if (value!.isEmpty || value.length < 6) {
+              return 'ກະລຸນາປ້ອນ ລະຫັດຜ່ານ ແລະ ຫຼາຍກ່ວາ 6 ຕົວອັກສອນ';
+            }
+            if ((_passwordController.text != _confirmPasswordController.text)) {
+              return 'ລະຫັດຜ່ານບໍ່ກົງກັນ';
+            }
+            return null;
+          },
+          obscureText: _obscureTextConfirmPassword,
+          decoration: InputDecoration(
+            hintText: "ຢືນຢັນລະຫັດຜ່ານ",
+            fillColor: Colors.white,
+            filled: true,
+            contentPadding: const EdgeInsets.symmetric(vertical: 15),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
+            ),
+            prefixIcon: const Icon(Icons.lock, color: Colors.black54),
+            suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _obscureTextConfirmPassword = !_obscureTextConfirmPassword;
+                  });
+                },
+                icon: Icon(
+                  _obscureTextConfirmPassword
+                      ? Icons.visibility
+                      : Icons.visibility_off,
+                  color: Colors.black54,
+                )),
+          ),
+        ));
+  }
+
   void onRegister() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
-      profile.email = _emailController.text;
-      profile.password = _passwordController.text;
-
-      try {
-        await _auth.createUserWithEmailAndPassword(
-          email: profile.email,
-          password: profile.password,
-        );
-        Fluttertoast.showToast(
-          msg: 'ລົງທະບຽນຜູ້ໃຊ້ສຳເລັດແລ້ວ',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-        );
-        _formKey.currentState!.reset();
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          Fluttertoast.showToast(
-            msg: 'ລະບົບບໍ່ອະນຸມັດໃຫ້ໃຊ້ລະຫັດຜ່ານນີ້',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-          );
-        } else if (e.code == 'email-already-in-use') {
-          Fluttertoast.showToast(
-            msg: 'ບັນຊີນີ້ ຖືກລົງທະບຽນໃນລະບົບແລ້ວ',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-          );
-        }
-      } catch (e) {
-        Fluttertoast.showToast(
-          msg: e.toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
+      bool registrationResult = await AuthService.registerUser(
+          name: _nameController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+          role: 'U',
+          phone: _phoneController.text.trim());
+      if (registrationResult) {
+        resetForm();
       }
+      setState(() {
+        _isLoading = false;
+      });
     }
+  }
+
+  void resetForm() {
+    _nameController.clear();
+    _emailController.clear();
+    _phoneController.clear();
+    _passwordController.clear();
+    _confirmPasswordController.clear();
   }
 }
