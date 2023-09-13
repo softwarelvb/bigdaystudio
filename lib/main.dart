@@ -23,20 +23,20 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final authBloc =
+      BlocProvider<AuthBloc>(create: (context) => AuthBloc(AuthService()));
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [BlocProvider(create: (context) => AuthBloc(AuthService()))],
+        providers: [authBloc],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: colortheme,
           home: const LoginFirebase(),
           initialRoute: "/login",
           routes: {
-            "/homepage": (context) => BlocProvider.value(
-              value: BlocProvider.of<AuthBloc>(context),
-              child: HomePage(),
-            ),
+            "/homepage": (context) => const HomePage(),
             "/register": (context) => const PhotographerReservationForm(),
             "/login": (context) => const LoginFirebase(),
             "/register-user": (context) => const RegisterUser(),
@@ -49,4 +49,3 @@ class MyApp extends StatelessWidget {
         ));
   }
 }
-

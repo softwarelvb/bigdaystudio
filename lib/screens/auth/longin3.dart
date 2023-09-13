@@ -56,189 +56,186 @@ class _LoginFirebaseState extends State<LoginFirebase> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => AuthBloc(AuthService()),
-        child: BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) async {
-            if (state is AuthAuthenticated) {
-              Navigator.pushNamedAndRemoveUntil(context, '/homepage', (route) => false);
-            } else if (state is AuthError) {
-              Fluttertoast.showToast(
-                msg: state.errorMessage,
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-              );
-            }
-          },
-          builder: (context, state) {
-            return Stack(
-              children: [
-                Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.amberAccent, Colors.amberAccent[400]!],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) async {
+          if (state is AuthAuthenticated) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/homepage', (route) => false);
+          } else if (state is AuthError) {
+            Fluttertoast.showToast(
+              msg: state.errorMessage,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+            );
+          }
+        },
+        builder: (context, state) {
+          return Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.amberAccent, Colors.amberAccent[400]!],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
-                    child: SafeArea(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
+                  ),
+                  child: SafeArea(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 20.0,
+                                ),
+                                child:
+                                    Image.asset('assets/xl.png', height: 140),
+                              ),
+                              const Center(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'ຍິນດິຕ້ອນຮັບເຂົ້າສູ່',
+                                      style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      'XL Wedding Studio',
+                                      style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      'ກະລຸນາປ້ອນອີເມວ ແລະ ລະຫັດຜ່ານຂອງທ່ານ',
+                                      style: TextStyle(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(60),
+                                topRight: Radius.circular(60),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                const SizedBox(height: 10),
+                                Column(
+                                  children: <Widget>[
+                                    Form(
+                                        key: _formkey,
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(height: 20),
+                                            _buildEmail(),
+                                            const SizedBox(height: 10),
+                                            _buildPassword()
+                                          ],
+                                        ))
+                                  ],
+                                ),
+                                _buildCheckBox(),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                    top: 20.0,
+                                      left: 20, right: 20),
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      if (_formkey.currentState!.validate()) {
+                                        // setState(() {
+                                        //   _isLoading = true;
+                                        // });
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        if (_rememberMe) {
+                                          prefs.setString('username',
+                                              _emailController.text);
+                                          prefs.setString('password',
+                                              _passwordController.text);
+                                        } else {
+                                          prefs.remove('username');
+                                          prefs.remove('password');
+                                        }
+
+                                        context.read<AuthBloc>().add(LoginEvent(
+                                            _emailController.text,
+                                            _passwordController.text));
+                                      }
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.white),
+                                      padding: MaterialStateProperty.all<
+                                          EdgeInsetsGeometry>(
+                                        const EdgeInsets.symmetric(
+                                          vertical: 12,
+                                        ),
+                                      ),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                    child: const Text("ເຂົ້າສູ່ລະບົບ",
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold)),
                                   ),
-                                  child:
-                                      Image.asset('assets/xl.png', height: 140),
                                 ),
-                                const Center(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'ຍິນດິຕ້ອນຮັບເຂົ້າສູ່',
-                                        style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        'XL Wedding Studio',
-                                        style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        'ກະລຸນາປ້ອນອີເມວ ແລະ ລະຫັດຜ່ານຂອງທ່ານ',
-                                        style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
+                                const SizedBox(height: 15),
+                                _buildForgotPassword(),
+                                const SizedBox(height: 10),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Divider(
+                                    height: 1,
+                                    thickness: 1,
+                                    color: Colors.amberAccent,
                                   ),
                                 ),
+                                const SizedBox(height: 20),
+                                _buildNotHaveAccount(),
                               ],
                             ),
-                            Container(
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(60),
-                                  topRight: Radius.circular(60),
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: <Widget>[
-                                  const SizedBox(height: 10),
-                                  Column(
-                                    children: <Widget>[
-                                      Form(
-                                          key: _formkey,
-                                          child: Column(
-                                            children: [
-                                              const SizedBox(height: 20),
-                                              _buildEmail(),
-                                              const SizedBox(height: 10),
-                                              _buildPassword()
-                                            ],
-                                          ))
-                                    ],
-                                  ),
-                                  _buildCheckBox(),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 20, right: 20),
-                                    child: ElevatedButton(
-                                      onPressed: () async {
-                                        if (_formkey.currentState!.validate()) {
-                                          // setState(() {
-                                          //   _isLoading = true;
-                                          // });
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          if (_rememberMe) {
-                                            prefs.setString('username',
-                                                _emailController.text);
-                                            prefs.setString('password',
-                                                _passwordController.text);
-                                          } else {
-                                            prefs.remove('username');
-                                            prefs.remove('password');
-                                          }
-
-                                          context.read<AuthBloc>().add(
-                                              LoginEvent(_emailController.text,
-                                                  _passwordController.text));
-                                        }
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.white),
-                                        padding: MaterialStateProperty.all<
-                                            EdgeInsetsGeometry>(
-                                          const EdgeInsets.symmetric(
-                                            vertical: 12,
-                                          ),
-                                        ),
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                      ),
-                                      child: const Text("ເຂົ້າສູ່ລະບົບ",
-                                          style: TextStyle(
-                                              color: Colors.black54,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  _buildForgotPassword(),
-                                  const SizedBox(height: 10),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                    child: Divider(
-                                      height: 1,
-                                      thickness: 1,
-                                      color: Colors.amberAccent,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  _buildNotHaveAccount(),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    )),
-                if (state is AuthLoading) const Loading(),
-              ],
-            );
-          },
-        ),
+                    ),
+                  )),
+              if (state is AuthLoading) const Loading(),
+            ],
+          );
+        },
       ),
     );
   }
