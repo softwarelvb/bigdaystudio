@@ -3,8 +3,10 @@ import 'package:bigdaystudio/screens/auth/Login.dart';
 import 'package:bigdaystudio/screens/homepage/homepage1.dart';
 import 'package:flutter/material.dart';
 
+import '../../app.dart';
 import '../../main.dart';
 import '../FindList/FindingPage.dart';
+import '../routes.dart';
 import 'MainPage.dart';
 import 'Menu.dart';
 
@@ -165,7 +167,7 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushReplacementNamed(
-                context, '/register');
+                context, AppRoute.register);
           },
           backgroundColor: colortheme.primaryColor,
           foregroundColor: Colors.limeAccent,

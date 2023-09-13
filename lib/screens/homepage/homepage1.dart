@@ -1,3 +1,4 @@
+import 'package:bigdaystudio/screens/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../components/Dashboard.dart';
@@ -89,7 +90,7 @@ class HomePage1 extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed("/profile");
+                    Navigator.of(context).pushNamed(AppRoute.profile);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(2),

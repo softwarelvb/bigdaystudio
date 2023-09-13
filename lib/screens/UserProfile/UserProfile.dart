@@ -1,4 +1,5 @@
 import 'package:bigdaystudio/loading/Loading.dart';
+import 'package:bigdaystudio/screens/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,10 +25,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
   final String _phone = '123-456-7890';
   final String _address = '123 Main St, Anytown, USA';
   final String _imagePath = 'assets/user_image.png';
-
-  void _editProfile() {
-    // TODO: Implement edit profile functionality
-  }
 
   UserModel? _user;
 
@@ -69,14 +66,20 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Profile'),
+          title: const Text(
+            'ຂໍ້ມູນຜູ້ໃຊ້',
+            style:
+                TextStyle(color: Colors.black54, fontWeight: FontWeight.w600),
+          ),
           centerTitle: true,
           backgroundColor: Colors.amberAccent,
           elevation: 0,
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.edit),
-              onPressed: _editProfile,
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoute.updateUserProfile);
+              },
             ),
           ],
         ),
@@ -84,7 +87,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           listener: (context, state) {
             if (state is AuthUnauthenticated) {
               Navigator.pushNamedAndRemoveUntil(
-                  context, '/login', (route) => false);
+                  context, AppRoute.login, (route) => false);
               // Handle logout success, navigate to login page or perform any other action
             }
           },
@@ -110,7 +113,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           style: const TextStyle(
                             fontSize: 24.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Colors.black54,
                           ),
                         ),
                       ],

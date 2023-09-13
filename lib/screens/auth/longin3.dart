@@ -2,6 +2,7 @@ import 'package:bigdaystudio/bloc/Login/AuthBloc.dart';
 import 'package:bigdaystudio/bloc/Login/AuthState.dart';
 import 'package:bigdaystudio/loading/Loading.dart';
 import 'package:bigdaystudio/models/profile.dart';
+import 'package:bigdaystudio/screens/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -62,7 +63,7 @@ class _LoginFirebaseState extends State<LoginFirebase> {
             await UserStorage.saveUser(
                 user); // Store the user data using UserStorage
             Navigator.pushNamedAndRemoveUntil(
-                context, '/homepage', (route) => false);
+                context, AppRoute.home, (route) => false);
           } else if (state is AuthError) {
             Fluttertoast.showToast(
               msg: state.errorMessage,
@@ -328,7 +329,6 @@ class _LoginFirebaseState extends State<LoginFirebase> {
         setState(() {
           _rememberMe = value!;
         });
-        print("_rememberMe ${_rememberMe}");
         await prefs.setBool('rememberMe', _rememberMe);
       },
       controlAffinity: ListTileControlAffinity.leading,
@@ -354,7 +354,7 @@ class _LoginFirebaseState extends State<LoginFirebase> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pushNamed(context, "/register-user");
+              Navigator.pushNamed(context, AppRoute.register);
             },
             child: const Text(
               'ລົງທະບຽນບັນຊີ',
@@ -372,7 +372,7 @@ class _LoginFirebaseState extends State<LoginFirebase> {
   Widget _buildForgotPassword() {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, "/reset-password");
+        Navigator.pushNamed(context, AppRoute.resetPassword);
       },
       child: Text(
         'ລືມລະຫັດຜ່ານ?',
