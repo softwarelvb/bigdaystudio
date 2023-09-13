@@ -2,8 +2,6 @@ import 'package:bigdaystudio/bloc/Login/AuthBloc.dart';
 import 'package:bigdaystudio/bloc/Login/AuthState.dart';
 import 'package:bigdaystudio/loading/Loading.dart';
 import 'package:bigdaystudio/models/profile.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -23,7 +21,6 @@ class LoginFirebase extends StatefulWidget {
 
 class _LoginFirebaseState extends State<LoginFirebase> {
   final _formkey = GlobalKey<FormState>();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();

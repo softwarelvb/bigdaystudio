@@ -1,6 +1,9 @@
 import 'package:bigdaystudio/models/UserModel.dart';
 
-abstract class AuthState {}
+abstract class AuthState {
+  final String name = 'sinkerd11';
+  List<Object> get props => [name];
+}
 
 class AuthInitial extends AuthState {}
 
@@ -10,6 +13,7 @@ class AuthAuthenticated extends AuthState {
   final UserModel user;
   AuthAuthenticated(this.user);
 
+  @override
   List<Object> get props => [user];
 }
 
