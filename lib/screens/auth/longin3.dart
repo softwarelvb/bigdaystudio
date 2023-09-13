@@ -10,7 +10,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../bloc/Login/AuthEvent.dart';
+import '../../models/UserModel.dart';
 import '../../services/UserService.dart';
+import '../../storage/UserStorage.dart';
 
 class LoginFirebase extends StatefulWidget {
   const LoginFirebase({super.key});
@@ -59,6 +61,9 @@ class _LoginFirebaseState extends State<LoginFirebase> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) async {
           if (state is AuthAuthenticated) {
+            UserModel user = state.user;
+            await UserStorage.saveUser(
+                user); // Store the user data using UserStorage
             Navigator.pushNamedAndRemoveUntil(
                 context, '/homepage', (route) => false);
           } else if (state is AuthError) {
